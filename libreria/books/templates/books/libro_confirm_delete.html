@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Libro{% endblock %}
+{% block content %}
+  <div class="delete-container">
+    <div class="delete-card">
+      <h2>Eliminar Libro</h2>
+      <p>¿Estás seguro de que deseas eliminar el libro <strong>"{{ object.titulo }}"</strong>?</p>
+
+      <form method="post" class="delete-form">
+        {% csrf_token %}
+        <div class="form-actions">
+          <input type="submit" value="Eliminar" class="btn-danger">
+          <a href="{% url 'libro-list' %}" class="btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    .delete-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60vh;
+    }
+
+    .delete-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      padding: 30px;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .delete-card h2 {
+      color: #2c2b45;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .delete-card p {
+      color: #333;
+      font-size: 1em;
+      margin-bottom: 25px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .btn-danger,
+    .btn-secondary {
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s ease;
+      font-size: 0.95em;
+    }
+
+    .btn-danger {
+      background-color: #F2766D;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background-color: #d95c58;
+    }
+
+    .btn-secondary {
+      background-color: #f4f6f8;
+      color: #2c2b45;
+      border: 1px solid #ddd;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e9ecf0;
+    }
+  </style>
+{% endblock %}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Sistema de Alquiler de Libros{% endblock %}</title>
+
+  <!-- Fuente moderna y ligera -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --color-bg: #f8fafc;
+      --color-header: #393859;
+      --color-accent: #85C8F2;
+      --color-text: #222;
+      --color-card: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--color-header);
+      color: white;
+      padding: 25px 10px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    nav {
+      background: var(--color-accent);
+      padding: 12px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav a i {
+      font-size: 1rem;
+      color: #333;
+    }
+
+    nav a:hover {
+      color: var(--color-header);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: var(--color-card);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    button,
+    input[type=submit] {
+      background-color: var(--color-header);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover,
+    input[type=submit]:hover {
+      background-color: #2e2d49;
+    }
+
+    img {
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fa-solid fa-book-open"></i> Sistema de Alquiler de Libros</h1>
+  </header>
+
+  <nav>
+    <a href="{% url 'libro-list' %}"><i class="fa-solid fa-book"></i> Libros</a>
+    <a href="{% url 'prestamo-list' %}"><i class="fa-solid fa-handshake"></i> Préstamos</a>
+    <a href="/admin/"><i class="fa-solid fa-gear"></i> Admin</a>
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; {{ now|date:"Y" }} Biblioteca Digital — Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>

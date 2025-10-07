@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Préstamos{% endblock %}
+{% block content %}
+  <div class="prestamos-header">
+    <h2>Lista de Préstamos</h2>
+    <a href="{% url 'prestamo-create' %}" class="btn-primary">
+      <span class="icon">＋</span> Registrar Préstamo
+    </a>
+  </div>
+
+  {% if object_list %}
+    <table class="prestamos-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Libro</th>
+          <th>Usuario</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in object_list %}
+          <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.libro.titulo }}</td>
+            <td>{{ p.usuario }}</td>
+            <td>{{ p.fecha_inicio }}</td>
+            <td>{{ p.fecha_fin|default:"—" }}</td>
+            <td class="acciones">
+              <a href="{% url 'prestamo-detail' p.pk %}" class="btn-icon" title="Ver">👁</a>
+              <a href="{% url 'prestamo-update' p.pk %}" class="btn-icon" title="Editar">✏️</a>
+              <a href="{% url 'prestamo-delete' p.pk %}" class="btn-icon" title="Eliminar">🗑</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="no-data">No hay préstamos registrados.</p>
+  {% endif %}
+
+  <style>
+    .prestamos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .prestamos-header h2 {
+      color: #2c2b45;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background-color: #393859;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #2c2b45;
+    }
+
+    .prestamos-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .prestamos-table thead {
+      background-color: #CEE4F2;
+    }
+
+    .prestamos-table th, .prestamos-table td {
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .prestamos-table tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .prestamos-table th {
+      font-weight: 600;
+      color: #2c2b45;
+    }
+
+    .acciones {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-icon {
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-icon:hover {
+      opacity: 0.7;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    }
+  </style>
+{% endblock %}

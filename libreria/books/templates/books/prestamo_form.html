@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %}Formulario de Préstamo{% endblock %}
+
+{% block content %}
+<div class="prestamo-container">
+  <h2 class="prestamo-title">
+    {% if object %}Editar Préstamo{% else %}Registrar Préstamo{% endif %}
+  </h2>
+
+  <form method="post" class="prestamo-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="prestamo-actions">
+      <input type="submit" value="Guardar" class="btn-guardar">
+      <a href="{% url 'prestamo-list' %}" class="btn-cancelar">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<style>
+  .prestamo-container {
+    max-width: 500px;
+    margin: 60px auto;
+    background: #f9f9fc;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    font-family: "Poppins", sans-serif;
+    color: #2c2c40;
+  }
+
+  .prestamo-title {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #393859;
+    margin-bottom: 25px;
+  }
+
+  .prestamo-form p {
+    margin-bottom: 18px;
+  }
+
+  .prestamo-form label {
+    display: block;
+    font-weight: 600;
+    color: #393859;
+    margin-bottom: 6px;
+  }
+
+  .prestamo-form input,
+  .prestamo-form select,
+  .prestamo-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .prestamo-form input:focus,
+  .prestamo-form select:focus,
+  .prestamo-form textarea:focus {
+    outline: none;
+    border-color: #85c8f2;
+    box-shadow: 0 0 0 3px rgba(133, 200, 242, 0.3);
+  }
+
+  .prestamo-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  .btn-guardar,
+  .btn-cancelar {
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-guardar {
+    background-color: #85c8f2;
+    color: #fff;
+  }
+
+  .btn-guardar:hover {
+    background-color: #5fb4ea;
+    transform: translateY(-2px);
+  }
+
+  .btn-cancelar {
+    background-color: #f2dc6d;
+    color: #333;
+  }
+
+  .btn-cancelar:hover {
+    background-color: #f2c879;
+    transform: translateY(-2px);
+  }
+
+  /* Animación suave al aparecer */
+  .prestamo-container {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+{% endblock %}

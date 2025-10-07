@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Detalle del Libro{% endblock %}
+
+{% block content %}
+<div style="max-width:800px; margin:auto;">
+  <h2 style="text-align:center; color:#393859; font-size:1.8rem; margin-bottom:20px;">
+    <i class="fa-solid fa-book-open"></i> {{ object.titulo }}
+  </h2>
+
+  <div style="
+    display:flex; 
+    flex-wrap:wrap; 
+    gap:20px; 
+    align-items:flex-start; 
+    background:#fff;
+    border-radius:12px; 
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    padding:20px;
+  ">
+    {% if object.portada %}
+      <div style="flex:1; min-width:250px;">
+        <img src="{{ object.portada.url }}" 
+             alt="Portada de {{ object.titulo }}" 
+             style="width:100%; height:auto; border-radius:10px; object-fit:cover;">
+      </div>
+    {% else %}
+      <div style="
+        flex:1; min-width:250px; height:350px; background:#f0f0f5;
+        display:flex; align-items:center; justify-content:center; color:#888; font-size:3rem;
+        border-radius:10px;
+      ">
+        <i class="fa-solid fa-image"></i>
+      </div>
+    {% endif %}
+
+    <div style="flex:2; min-width:300px;">
+      <p style="font-size:1.1rem; margin:5px 0;"><b>Autor:</b> {{ object.autor }}</p>
+      <p style="margin:5px 0;">
+        <b>Estado:</b>
+        {% if object.estado == "PREST" %}
+          <span style="background:#F2C879; color:#000; padding:4px 8px; border-radius:6px;">Prestado</span>
+        {% elif object.estado == "PERD" %}
+          <span style="background:#F2766D; color:#fff; padding:4px 8px; border-radius:6px;">Perdido</span>
+        {% else %}
+          <span style="background:#B2E6A5; color:#000; padding:4px 8px; border-radius:6px;">Disponible</span>
+        {% endif %}
+      </p>
+      <p style="margin-top:15px; text-align:justify; color:#444;">
+        <b>Resumen:</b><br>{{ object.resumen|default:"Sin resumen disponible." }}
+      </p>
+    </div>
+  </div>
+
+  <hr style="margin:30px 0; border:1px solid #eee;">
+
+  <h3 style="color:#393859; margin-bottom:15px;">
+    <i class="fa-solid fa-clock-rotate-left"></i> Historial de Préstamos
+  </h3>
+
+  {% if object.prestamos.all %}
+    <div style="border-radius:10px; background:#fff; padding:15px; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:#85C8F2; color:#000;">
+            <th style="text-align:left; padding:8px;">Usuario</th>
+            <th style="text-align:left; padding:8px;">Fecha Inicio</th>
+            <th style="text-align:left; padding:8px;">Fecha Fin</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in object.prestamos.all %}
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:8px;">{{ p.usuario }}</td>
+              <td style="padding:8px;">{{ p.fecha_inicio }}</td>
+              <td style="padding:8px;">{{ p.fecha_fin|default:"—" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p style="color:#666;">Este libro no tiene préstamos registrados.</p>
+  {% endif %}
+
+  <div style="margin-top:30px; text-align:center; display:flex; justify-content:center; gap:10px;">
+    <a href="{% url 'libro-update' object.pk %}">
+      <button style="background:#F2C879; color:#000;">
+        <i class="fa-solid fa-pen"></i> Editar
+      </button>
+    </a>
+    <a href="{% url 'libro-delete' object.pk %}">
+      <button style="background:#F2766D; color:#fff;">
+        <i class="fa-solid fa-trash"></i> Eliminar
+      </button>
+    </a>
+    <a href="{% url 'libro-list' %}">
+      <button style="background:#85C8F2; color:#000;">
+        <i class="fa-solid fa-arrow-left"></i> Volver
+      </button>
+    </a>
+  </div>
+</div>
+{% endblock %}
